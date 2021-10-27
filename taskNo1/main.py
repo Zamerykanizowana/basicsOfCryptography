@@ -4,9 +4,6 @@ import math
 n = Blum number
 r = the lenght of the number
 a = random selected natural number, but math.gcd(a,n) = 1
-
-
-
 """
 
 # Function isBlumInteger from: https://www.geeksforgeeks.org/blum-integer/
@@ -43,7 +40,6 @@ def isBlumInteger(n):
 def binaryToDecimal(val):
     return int(val,2)
 
-
 def testNumberOfOne(val):
     test = val.count('1')
     print(f'Test no. 1: number of 1: {test}')
@@ -59,28 +55,54 @@ def testLenghtOfSeries(val):
         check = 1
 
         for ele in val[1:]:
-            print(f'ele: {ele}')
+            #print(f'ele: {ele}')
             if first == ele:
                 check += 1
             else:
-                tab_series[check-1] += 1
+                if check < 7:
+                    tab_series[check-1] += 1
+                else:
+                    tab_series[5] += 1
                 first = ele
                 check = 1
-            print(f'check: {check}')
-            print(f'Test no. 2: {tab_series}')
-        tab_series[check-1] += 1
-        print(f'check final: {check}')
-        print(f'Test no.2 final: {tab_series}')
-    else:
-        print('String is empty!')
+            #print(f'check: {check}')
+            #print(f'Test no. 2: {tab_series}')
+        if check < 7:
+            tab_series[check-1] += 1
+        else:
+            tab_series[5] += 1
 
-test_string= ''
-testLenghtOfSeries(test_string)
+        #print(f'check final: {check}')
+        print(f'Test no.2 final: {tab_series}')
+
+        result = True
+        print(f'test line tab_series {tab_series[0]}')
+        if 2315 > tab_series[0] or tab_series[0] > 2685:
+            result = False
+        if 1114 > tab_series[1] or tab_series[1] > 1386:
+            result = False
+        if 527 > tab_series[2] or tab_series[2] > 723:
+            result = False
+        if 240 > tab_series[3] or tab_series[3] > 384:
+            result = False
+        if 103 > tab_series[4] or tab_series[4] > 209:
+            result = False
+        if 103 > tab_series[5] or tab_series[5] > 209:
+            result = False
+        print('Test no. 2 passed' if result else 'Test no. 2 failed')
+
+	    
+    else:
+            print('String is empty!')
+
+#Test for test no. 2 :)
+#test_string= '11111010101010111111111111111111111'
+#testLenghtOfSeries(test_string)
 
 n = 311*431
 print(f'Blum number: {n}' if isBlumInteger(n) else f'Not Blum number: {n}')
 
-a = int('0011111010110000100101010111001010100101001011010101110100010111100001110111101111111111111001001011011010100001001110110000100000110001100111011001100101001101110000110100001010010011010001110001100011010000000011001100010001100101011011000111110001101111001001000', 2)
+a = int('0101100100000001111101010001010110000110111111010010111110101001011000110101100101010110011111010100001', 2)
 print(f'Radom number: {a}')
 
 print(f'Selected number gcd(a,n)=1' if math.gcd(a,n)==1 else 'Wrong number a')
@@ -101,3 +123,4 @@ while r > 1:
 lenght = len(generated_number)
 print(f'Test line: generated_number lenght: {lenght}')
 testNumberOfOne(generated_number)
+testLenghtOfSeries(generated_number)
