@@ -63,8 +63,9 @@ def testLenghtOfSeries(val):
                     tab_series[check-1] += 1
                 else:
                     tab_series[5] += 1
-                first = ele
                 check = 1
+            
+            first = ele
             #print(f'check: {check}')
             #print(f'Test no. 2: {tab_series}')
         if check < 7:
@@ -98,6 +99,29 @@ def testLenghtOfSeries(val):
 #Test for test no. 2 :)
 #test_string= '11111010101010111111111111111111111'
 #testLenghtOfSeries(test_string)
+
+def testLongSerie(val):
+    if len(val) > 0:
+        test = True
+        first = val[0]
+        check = 1
+
+        for ele in val[1:]:
+            #print(f'ele: {ele}')
+            if first == ele:
+                check += 1
+                if check > 25:
+                    test = False
+                    print(f'Test will fail, check equils {check}')
+            else:
+                check = 1
+            
+            first = ele
+        print('Test no. 3 passed' if test else 'Test no. 3 failed')
+        
+
+
+
 
 n = 311*431
 print(f'Blum number: {n}' if isBlumInteger(n) else f'Not Blum number: {n}')
