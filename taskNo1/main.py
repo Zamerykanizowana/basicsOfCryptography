@@ -163,10 +163,10 @@ def pokerTest(val):
 
 
 
-n = 311*431
+n = 431*419
 print(f'Blum number: {n}' if isBlumInteger(n) else f'Not Blum number: {n}')
 
-a = int('1010001010110000110111011111010100010101100001110000011001101001010011001011000110101100111010100001', 2)
+a = int('1010100010101100001110000011001101001010011001011000110101100111010100001', 2)
 print(f'Random number: {a}')
 
 print(f'Selected number gcd(a,n)=1' if math.gcd(a,n)==1 else 'Wrong number a')
