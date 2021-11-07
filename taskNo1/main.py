@@ -41,6 +41,9 @@ def binaryToDecimal(val):
     return int(val,2)
 
 def testNumberOfOne(val):
+
+    print('Test no. 1 start ---------------------------------------')
+
     test = val.count('1')
     print(f'Test no. 1: number of 1: {test}')
     if test > 9725 and test < 10275:
@@ -48,7 +51,11 @@ def testNumberOfOne(val):
     else:
         print('Test no. 1 failed')
 
+    print('Test no. 1 stop ----------------------------------------')
+
 def testLenghtOfSeries(val):
+    print('Test no. 2 start ---------------------------------------')
+
     if len(val) > 0:
         tab_series = [0,0,0,0,0,0]
         first = val[0]
@@ -92,15 +99,16 @@ def testLenghtOfSeries(val):
             result = False
         print('Test no. 2 passed' if result else 'Test no. 2 failed')
 
-	    
     else:
-            print('String is empty!')
+        print('String is empty!')
+    print('Test no. 2 stop ----------------------------------------')
 
 #Test for test no. 2 :)
 #test_string= '11111010101010111111111111111111111'
 #testLenghtOfSeries(test_string)
 
 def testLongSerie(val):
+    print('Test no. 3 start ---------------------------------------')
     if len(val) > 0:
         test = True
         first = val[0]
@@ -118,16 +126,48 @@ def testLongSerie(val):
             
             first = ele
         print('Test no. 3 passed' if test else 'Test no. 3 failed')
+    print('Test no. 3 stop ----------------------------------------')
         
+def pokerTest(val):
+    print('Test no. 4 start ---------------------------------------')
+    table_val = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+    table_len = len(table_val)
+    val_len = len(val)
+    print(f'Lenght of table {table_len}')
+    print(f'Lenght of val {val_len}')
+    i = 4
+    while i <= val_len:
+        table_val[int(val[i-4:i], 2)] += 1
+        result = val[i-4:i]
+        #print(f'Result: {result}')
+        i += 4
+    print(f'Result table: {table_val}')
+    
+    table_val_result = []
+    res = 0
+    for ele in table_val:
+        res += ele**2
+    res = res*(16/5000)-5000
+    if res > 2.16 and res < 46.17:
+        test = True
+    else:
+        test = False
+    print('Test no. 4 passed' if test else 'Test no. 4 failed')
+    print('Test no. 4 stop ----------------------------------------')
 
+
+#print('TEST NO. 4')
+#test_string_4 = 'random string to test Test no. 4'
+#test_num_4 = '11110000101011100000'
+#pokerTest(test_num_4)
 
 
 
 n = 311*431
 print(f'Blum number: {n}' if isBlumInteger(n) else f'Not Blum number: {n}')
 
-a = int('0101100100000001111101010001010110000110111111010010111110101001011000110101100101010110011111010100001', 2)
-print(f'Radom number: {a}')
+a = int('1010001010110000110111011111010100010101100001110000011001101001010011001011000110101100111010100001', 2)
+print(f'Random number: {a}')
 
 print(f'Selected number gcd(a,n)=1' if math.gcd(a,n)==1 else 'Wrong number a')
 
@@ -148,3 +188,5 @@ lenght = len(generated_number)
 print(f'Test line: generated_number lenght: {lenght}')
 testNumberOfOne(generated_number)
 testLenghtOfSeries(generated_number)
+testLongSerie(generated_number)
+pokerTest(generated_number)
