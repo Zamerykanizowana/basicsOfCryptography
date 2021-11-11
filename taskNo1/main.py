@@ -1,4 +1,5 @@
 import math
+import random
 
 """
 n = Blum number
@@ -120,7 +121,7 @@ def testLongSerie(val):
                 check += 1
                 if check > 25:
                     test = False
-                    print(f'Test will fail, check equils {check}')
+                    print(f'Test will fail, check equals {check}')
             else:
                 check = 1
             
@@ -128,6 +129,9 @@ def testLongSerie(val):
         print('Test no. 3 passed' if test else 'Test no. 3 failed')
     print('Test no. 3 stop ----------------------------------------')
         
+#test_string_3 = '111111111111111111111111111111111111111111111111111111111111111111111111'
+#testLongSerie(test_string_3)
+
 def pokerTest(val):
     print('Test no. 4 start ---------------------------------------')
     table_val = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
@@ -163,10 +167,15 @@ def pokerTest(val):
 
 
 
+#n = 431*419
+#M n
+#n = 62615533
 n = 431*419
 print(f'Blum number: {n}' if isBlumInteger(n) else f'Not Blum number: {n}')
 
-a = int('1010100010101100001110000011001101001010011001011000110101100111010100001', 2)
+a = int('1010100010111001011000110101100111010100001', 2)
+#M a
+#a = 7088
 print(f'Random number: {a}')
 
 print(f'Selected number gcd(a,n)=1' if math.gcd(a,n)==1 else 'Wrong number a')
