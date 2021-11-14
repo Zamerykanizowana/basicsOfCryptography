@@ -46,7 +46,7 @@ def testNumberOfOne(val):
     print('Test no. 1 start ---------------------------------------')
 
     test = val.count('1')
-    print(f'Test no. 1: number of 1: {test}')
+    #print(f'Test no. 1: number of 1: {test}')
     if test > 9725 and test < 10275:
         print('Test no. 1 passed')
     else:
@@ -54,59 +54,50 @@ def testNumberOfOne(val):
 
     print('Test no. 1 stop ----------------------------------------')
 
-def testLenghtOfSeries(val):
+def testLengthOfSeries(val):
     print('Test no. 2 start ---------------------------------------')
 
-    if len(val) > 0:
-        tab_series = [0,0,0,0,0,0]
-        first = val[0]
-        check = 1
+    # cheks = 0 means serie has 1 length, so this serie fits into 
+    # tab_series[x][check] / tab_res[x][check]
+    def __assign(first_ele, check_num, tab_res):
+        tab_res[int(first_ele)][check_num if check_num<6 else 5] += 1
+        return tab_res
+    
+    def __check(value, single_tab_constraints):
+        return single_tab_constraints[0] < value < single_tab_constraints[1]
 
-        for ele in val[1:]:
-            #print(f'ele: {ele}')
-            if first == ele:
-                check += 1
-            else:
-                if check < 7:
-                    tab_series[check-1] += 1
-                else:
-                    tab_series[5] += 1
-                check = 1
-            
-            first = ele
-            #print(f'check: {check}')
-            #print(f'Test no. 2: {tab_series}')
-        if check < 7:
-            tab_series[check-1] += 1
+
+    constraints = [[2315,2685], [1114, 1386], [527,723], [240,384], [103,209], [103,209]]
+    tab_series = [[0,0,0,0,0,0],[0,0,0,0,0,0]]
+    first = val[0]
+    check = 0
+    
+    for ele in val[1:]:
+        if first == ele:
+            check += 1
         else:
-            tab_series[5] += 1
+            tab_series = __assign(first, check, tab_series)
+            check = 0
+        first = ele
 
-        #print(f'check final: {check}')
-        print(f'Test no.2 final: {tab_series}')
+    tab_series = __assign(first, check, tab_series)
+            
+    print(f'tab_series: {tab_series}')
+    test_result = True
+    for single_tab in tab_series:
+        for index, ele in enumerate(single_tab):
+            test_result = __check(ele, constraints[index])
+            if not test_result:
+                break
+        if not test_result:
+            break
 
-        result = True
-        print(f'test line tab_series {tab_series[0]}')
-        if 2315 > tab_series[0] or tab_series[0] > 2685:
-            result = False
-        if 1114 > tab_series[1] or tab_series[1] > 1386:
-            result = False
-        if 527 > tab_series[2] or tab_series[2] > 723:
-            result = False
-        if 240 > tab_series[3] or tab_series[3] > 384:
-            result = False
-        if 103 > tab_series[4] or tab_series[4] > 209:
-            result = False
-        if 103 > tab_series[5] or tab_series[5] > 209:
-            result = False
-        print('Test no. 2 passed' if result else 'Test no. 2 failed')
-
-    else:
-        print('String is empty!')
+    print('Test no. 2 passed' if test_result else 'Test no. 2 failed') 
     print('Test no. 2 stop ----------------------------------------')
 
-#Test for test no. 2 :)
-#test_string= '11111010101010111111111111111111111'
-#testLenghtOfSeries(test_string)
+test_string_for_test_no_2 = '111101010101111111000000000001'
+testLengthOfSeries(test_string_for_test_no_2)
+
 
 def testLongSerie(val):
     print('Test no. 3 start ---------------------------------------')
@@ -137,8 +128,8 @@ def pokerTest(val):
     table_val = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
     table_len = len(table_val)
     val_len = len(val)
-    print(f'Lenght of table {table_len}')
-    print(f'Lenght of val {val_len}')
+    print(f'Length of table {table_len}')
+    print(f'Length of val {val_len}')
     i = 4
     while i <= val_len:
         table_val[int(val[i-4:i], 2)] += 1
@@ -156,7 +147,7 @@ def pokerTest(val):
         test = True
     else:
         test = False
-    print('Test no. 4 passed' if test else 'Test no. 4 failed')
+    print('\x1b[32mTest no. 4 passed\x1b[0m' if test else '\x1b[31mTest no. 4 failed\x1b[0m')
     print('Test no. 4 stop ----------------------------------------')
 
 
@@ -166,11 +157,12 @@ def pokerTest(val):
 #pokerTest(test_num_4)
 
 
-
-#n = 431*419
+#Adam n
+#n = 1200000003730000000273
 #M n
 #n = 62615533
-n = 431*419
+
+n = 5323*7411
 print(f'Blum number: {n}' if isBlumInteger(n) else f'Not Blum number: {n}')
 
 a = int('1010100010111001011000110101100111010100001', 2)
@@ -196,6 +188,6 @@ while r > 1:
 lenght = len(generated_number)
 print(f'Test line: generated_number lenght: {lenght}')
 testNumberOfOne(generated_number)
-testLenghtOfSeries(generated_number)
+testLengthOfSeries(generated_number)
 testLongSerie(generated_number)
 pokerTest(generated_number)
