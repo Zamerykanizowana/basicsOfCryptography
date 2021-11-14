@@ -48,9 +48,9 @@ def testNumberOfOne(val):
     test = val.count('1')
     #print(f'Test no. 1: number of 1: {test}')
     if test > 9725 and test < 10275:
-        print('Test no. 1 passed')
+        print('\x1b[32mTest no. 1 passed\x1b[0m')
     else:
-        print('Test no. 1 failed')
+        print('\x1b[31mTest no. 1 failed\x1b[0m')
 
     print('Test no. 1 stop ----------------------------------------')
 
@@ -92,11 +92,11 @@ def testLengthOfSeries(val):
         if not test_result:
             break
 
-    print('Test no. 2 passed' if test_result else 'Test no. 2 failed') 
+    print('\x1b[32mTest no. 2 passed\x1b[0m' if test_result else '\x1b[31mTest no. 2 failed\x1b[0m') 
     print('Test no. 2 stop ----------------------------------------')
 
-test_string_for_test_no_2 = '111101010101111111000000000001'
-testLengthOfSeries(test_string_for_test_no_2)
+#test_string_for_test_no_2 = '111101010101111111000000000001'
+#testLengthOfSeries(test_string_for_test_no_2)
 
 
 def testLongSerie(val):
@@ -117,7 +117,7 @@ def testLongSerie(val):
                 check = 1
             
             first = ele
-        print('Test no. 3 passed' if test else 'Test no. 3 failed')
+        print('\x1b[32mTest no. 3 passed\x1b[0m' if test else '\x1b[31mTest no. 3 failed\x1b[0m')
     print('Test no. 3 stop ----------------------------------------')
         
 #test_string_3 = '111111111111111111111111111111111111111111111111111111111111111111111111'
@@ -157,37 +157,44 @@ def pokerTest(val):
 #pokerTest(test_num_4)
 
 
-#Adam n
+
+
+print('\x1b[104m------------- Generator BBS -------------\x1b[0m')
+#Adam numbers
 #n = 1200000003730000000273
-#M n
+
+#M numbers
 #n = 62615533
-
-n = 5323*7411
-print(f'Blum number: {n}' if isBlumInteger(n) else f'Not Blum number: {n}')
-
-a = int('1010100010111001011000110101100111010100001', 2)
-#M a
 #a = 7088
-print(f'Random number: {a}')
 
-print(f'Selected number gcd(a,n)=1' if math.gcd(a,n)==1 else 'Wrong number a')
+#my numbers
+n = 5323*7411
+a = int('1010100010111001011000110101100111010100001', 2)
 
-r = 20000
+# Check if number are good to use
+isBlumInt = isBlumInteger(n)
+isGCDOne = math.gcd(a,n)==1
 
-x_0 = a**2%n
-generated_number = '0' if x_0%2 == 0 else '1'
-while r > 1:
-    #print(f'Line {r}')
-    x_0 = x_0**2%n
-    r -= 1
-    generated_number = generated_number + ('0' if x_0%2 == 0 else '1')
+if isBlumInt and isGCDOne:
 
-#print(bin(x_0))
-#print('Generated number:')
-#print(generated_number)
-lenght = len(generated_number)
-print(f'Test line: generated_number lenght: {lenght}')
-testNumberOfOne(generated_number)
-testLengthOfSeries(generated_number)
-testLongSerie(generated_number)
-pokerTest(generated_number)
+    print(f'Blum number: {n}')
+    print(f'Random number: {a}')
+    print(f'Selected number gcd(a,n)=1')
+
+    # r - number of signs (0 or 1)
+    r = 20000
+    x_0 = a**2%n
+    generated_number = '0' if x_0%2 == 0 else '1'
+    while r > 1:
+        #print(f'Line {r}')
+        x_0 = x_0**2%n
+        r -= 1
+        generated_number = generated_number + ('0' if x_0%2 == 0 else '1')
+
+    print('\x1b[104m------------- TESTS -------------\x1b[0m')
+    testNumberOfOne(generated_number)
+    testLengthOfSeries(generated_number)
+    testLongSerie(generated_number)
+    pokerTest(generated_number)
+else:
+    print(f'Selected numbers are worng, isBlumInt: {isBlumInt}, isGCDOne: {isGCDOne}')
