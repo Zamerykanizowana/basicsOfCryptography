@@ -1,5 +1,6 @@
 import math
 import random
+from datetime import datetime
 
 """
 n = Blum number
@@ -156,6 +157,52 @@ def pokerTest(val):
 #test_num_4 = '11110000101011100000'
 #pokerTest(test_num_4)
 
+# key is from generator bbs, this is the generated number
+# massage is secrete massage to encrypt or decrypt
+# mode:
+## encrypt - True
+## decrypt - False
+def encryptor_decryptor(key, message, mode):
+    if mode:
+        bit_message = bin(int.from_bytes(message.encode(), 'big'))
+        #print(f'bit_message: {bit_message[2:]}')
+        #print(f'key:    {key}')
+        length_bit_message = len(bit_message[2:])
+        #print(f'Length: {length_bit_message}')
+        if length_bit_message <= len(key):
+            tmp = bin(int(bit_message[2:],2) ^ int(key,2))
+            #print(f'tmp:    {tmp[2:]}')
+            result = tmp[-length_bit_message:]
+
+            
+            # dd/mm/YY H:M:S
+            now = datetime.now()
+            date_and_time = now.strftime("%d-%m-%Y_%H:%M:%S")
+
+            # creating file with generated number
+            f_en_message= open("142463_"+date_and_time+"_encrypted_message.txt","w+")
+            f_en_message.write(result)
+            f_en_message.close()
+            #print(f'encrypted_m: {result}')
+            print('Your message was encrypted, check saved file if needed')
+            return result
+        else:
+            print('Your message is too long!')
+    else:
+        length_bit_message = len(message)
+        tmp = bin(int(message,2) ^ int(key,2))
+        tmp = int(tmp[-length_bit_message:],2)
+        result = tmp.to_bytes((tmp.bit_length() + 7) // 8, 'big').decode()
+        print('Your message was decrypted:')
+        print(result)
+        return result
+
+
+#print('Test for encryptor_decryptor')
+#key = '10000000011110011010'
+#mes = 'ab'
+#res = encryptor_decryptor(key, mes, True)
+#encryptor_decryptor(key, res, False)
 
 
 
@@ -177,6 +224,7 @@ isGCDOne = math.gcd(a,n)==1
 
 if isBlumInt and isGCDOne:
 
+    
     print(f'Blum number: {n}')
     print(f'Random number: {a}')
     print(f'Selected number gcd(a,n)=1')
@@ -196,5 +244,21 @@ if isBlumInt and isGCDOne:
     testLengthOfSeries(generated_number)
     testLongSerie(generated_number)
     pokerTest(generated_number)
+    
+    # dd/mm/YY H:M:S
+    now = datetime.now()
+    date_and_time = now.strftime("%d-%m-%Y_%H:%M:%S")
+    print("date and time: ", date_and_time)
+
+    # creating file with generated number
+    f_gen_number= open("142463_"+date_and_time+".txt","w+")
+    f_gen_number.write(generated_number)
+    f_gen_number.close()
+
+    # message to encrypte
+    secret_message = 'I dont know what to watch on Netflix today'
+    encrypted_message = encryptor_decryptor(generated_number,secret_message, True)
+    encryptor_decryptor(generated_number,encrypted_message,False)
+
 else:
     print(f'Selected numbers are worng, isBlumInt: {isBlumInt}, isGCDOne: {isGCDOne}')
