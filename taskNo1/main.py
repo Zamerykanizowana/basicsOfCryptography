@@ -185,7 +185,7 @@ def encryptor_decryptor(key, message, mode):
             f_en_message.close()
             #print(f'encrypted_m: {result}')
             print('Your message was encrypted, check saved file if needed')
-            return result
+            return result, tmp[2:]
         else:
             print('Your message is too long!')
     else:
@@ -204,7 +204,13 @@ def encryptor_decryptor(key, message, mode):
 #res = encryptor_decryptor(key, mes, True)
 #encryptor_decryptor(key, res, False)
 
+def runAllTests(generated_number):
 
+    print('\x1b[104m------------- TESTS -------------\x1b[0m')
+    testNumberOfOne(generated_number)
+    testLengthOfSeries(generated_number)
+    testLongSerie(generated_number)
+    pokerTest(generated_number)
 
 print('\x1b[104m------------- Generator BBS -------------\x1b[0m')
 #Adam numbers
@@ -216,7 +222,7 @@ print('\x1b[104m------------- Generator BBS -------------\x1b[0m')
 
 #my numbers
 n = 5323*7411
-a = int('1010100010111001011000110101100111010100001', 2)
+a = int('1010101010111001010100001', 2)
 
 # Check if number are good to use
 isBlumInt = isBlumInteger(n)
@@ -239,12 +245,8 @@ if isBlumInt and isGCDOne:
         r -= 1
         generated_number = generated_number + ('0' if x_0%2 == 0 else '1')
 
-    print('\x1b[104m------------- TESTS -------------\x1b[0m')
-    testNumberOfOne(generated_number)
-    testLengthOfSeries(generated_number)
-    testLongSerie(generated_number)
-    pokerTest(generated_number)
-    
+    runAllTests(generated_number)
+
     # dd/mm/YY H:M:S
     now = datetime.now()
     date_and_time = now.strftime("%d-%m-%Y_%H:%M:%S")
@@ -255,10 +257,13 @@ if isBlumInt and isGCDOne:
     f_gen_number.write(generated_number)
     f_gen_number.close()
 
-    # message to encrypte
-    secret_message = 'I dont know what to watch on Netflix today'
-    encrypted_message = encryptor_decryptor(generated_number,secret_message, True)
-    encryptor_decryptor(generated_number,encrypted_message,False)
+    encrypt_decrypt_message = True
+    if encrypt_decrypt_message:
+        # message to encrypte
+        secret_message = 'I dont know what to watch on Netflix today'
+        encrypted_message, encrypted_message_long = encryptor_decryptor(generated_number,secret_message, True)
+        runAllTests(encrypted_message_long)
+        encryptor_decryptor(generated_number,encrypted_message,False)
 
 else:
     print(f'Selected numbers are worng, isBlumInt: {isBlumInt}, isGCDOne: {isGCDOne}')
