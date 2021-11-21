@@ -44,7 +44,7 @@ def binaryToDecimal(val):
 
 def testNumberOfOne(val):
 
-    print('Test no. 1 start ---------------------------------------')
+    #print('Test no. 1 start ---------------------------------------')
 
     test = val.count('1')
     #print(f'Test no. 1: number of 1: {test}')
@@ -53,10 +53,10 @@ def testNumberOfOne(val):
     else:
         print('\x1b[31mTest no. 1 failed\x1b[0m')
 
-    print('Test no. 1 stop ----------------------------------------')
+    #print('Test no. 1 stop ----------------------------------------')
 
 def testLengthOfSeries(val):
-    print('Test no. 2 start ---------------------------------------')
+    #print('Test no. 2 start ---------------------------------------')
 
     # cheks = 0 means serie has 1 length, so this serie fits into 
     # tab_series[x][check] / tab_res[x][check]
@@ -83,7 +83,7 @@ def testLengthOfSeries(val):
 
     tab_series = __assign(first, check, tab_series)
             
-    print(f'tab_series: {tab_series}')
+    #print(f'tab_series: {tab_series}')
     test_result = True
     for single_tab in tab_series:
         for index, ele in enumerate(single_tab):
@@ -94,14 +94,14 @@ def testLengthOfSeries(val):
             break
 
     print('\x1b[32mTest no. 2 passed\x1b[0m' if test_result else '\x1b[31mTest no. 2 failed\x1b[0m') 
-    print('Test no. 2 stop ----------------------------------------')
+    #print('Test no. 2 stop ----------------------------------------')
 
 #test_string_for_test_no_2 = '111101010101111111000000000001'
 #testLengthOfSeries(test_string_for_test_no_2)
 
 
 def testLongSerie(val):
-    print('Test no. 3 start ---------------------------------------')
+    #print('Test no. 3 start ---------------------------------------')
     if len(val) > 0:
         test = True
         first = val[0]
@@ -113,31 +113,32 @@ def testLongSerie(val):
                 check += 1
                 if check > 25:
                     test = False
-                    print(f'Test will fail, check equals {check}')
+                    #print(f'Test will fail, check equals {check}')
+                    break
             else:
                 check = 1
             
             first = ele
         print('\x1b[32mTest no. 3 passed\x1b[0m' if test else '\x1b[31mTest no. 3 failed\x1b[0m')
-    print('Test no. 3 stop ----------------------------------------')
+    #print('Test no. 3 stop ----------------------------------------')
         
 #test_string_3 = '111111111111111111111111111111111111111111111111111111111111111111111111'
 #testLongSerie(test_string_3)
 
 def pokerTest(val):
-    print('Test no. 4 start ---------------------------------------')
+    #print('Test no. 4 start ---------------------------------------')
     table_val = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
     table_len = len(table_val)
     val_len = len(val)
-    print(f'Length of table {table_len}')
-    print(f'Length of val {val_len}')
+    #print(f'Length of table {table_len}')
+    #print(f'Length of val {val_len}')
     i = 4
     while i <= val_len:
         table_val[int(val[i-4:i], 2)] += 1
         result = val[i-4:i]
         #print(f'Result: {result}')
         i += 4
-    print(f'Result table: {table_val}')
+    #print(f'Result table: {table_val}')
     
     table_val_result = []
     res = 0
@@ -149,7 +150,7 @@ def pokerTest(val):
     else:
         test = False
     print('\x1b[32mTest no. 4 passed\x1b[0m' if test else '\x1b[31mTest no. 4 failed\x1b[0m')
-    print('Test no. 4 stop ----------------------------------------')
+    #print('Test no. 4 stop ----------------------------------------')
 
 
 #print('TEST NO. 4')
@@ -168,7 +169,7 @@ def encryptor_decryptor(key, message, mode):
         #print(f'bit_message: {bit_message[2:]}')
         #print(f'key:    {key}')
         length_bit_message = len(bit_message[2:])
-        #print(f'Length: {length_bit_message}')
+        print(f'Length: {length_bit_message}')
         if length_bit_message <= len(key):
             tmp = bin(int(bit_message[2:],2) ^ int(key,2))
             #print(f'tmp:    {tmp[2:]}')
@@ -193,8 +194,7 @@ def encryptor_decryptor(key, message, mode):
         tmp = bin(int(message,2) ^ int(key,2))
         tmp = int(tmp[-length_bit_message:],2)
         result = tmp.to_bytes((tmp.bit_length() + 7) // 8, 'big').decode()
-        print('Your message was decrypted:')
-        print(result)
+        print('Your message was decrypted')
         return result
 
 
@@ -203,6 +203,13 @@ def encryptor_decryptor(key, message, mode):
 #mes = 'ab'
 #res = encryptor_decryptor(key, mes, True)
 #encryptor_decryptor(key, res, False)
+
+
+def testIfmessageWasCorrectlyEncrypted(before_encryption, after_decryption, mode): 
+    if mode:
+        print(f'before_encryption: \n \x1b[34m{before_encryption}\x1b[0m')
+        print(f'after_decryption: \n \x1b[35mn{after_decryption}\x1b[0m')
+    print('\x1b[32mMessage was correctly encrypted-decrypted\x1b[0m' if before_encryption == after_decryption else '\x1b[31mEncryption-decryption failed\x1b[0m')
 
 def runAllTests(generated_number):
 
@@ -225,7 +232,9 @@ n = 5323*7411
 a = int('1010101010111001010100001', 2)
 
 # Check if number are good to use
-isBlumInt = isBlumInteger(n)
+#isBlumInt = isBlumInteger(n)
+# If don't have time to check Blum number ;)
+isBlumInt = True
 isGCDOne = math.gcd(a,n)==1
 
 if isBlumInt and isGCDOne:
@@ -260,10 +269,16 @@ if isBlumInt and isGCDOne:
     encrypt_decrypt_message = True
     if encrypt_decrypt_message:
         # message to encrypte
-        secret_message = 'I dont know what to watch on Netflix today'
+        with open('hp_chapter1.txt', 'r') as file:    
+            data = file.read().replace('\n', '')
+
+        file.close()
+        secret_message = data[:2000]
+        
         encrypted_message, encrypted_message_long = encryptor_decryptor(generated_number,secret_message, True)
         runAllTests(encrypted_message_long)
-        encryptor_decryptor(generated_number,encrypted_message,False)
+        decrypted_message = encryptor_decryptor(generated_number,encrypted_message,False) 
+        testIfmessageWasCorrectlyEncrypted(secret_message, decrypted_message,False)
 
 else:
     print(f'Selected numbers are worng, isBlumInt: {isBlumInt}, isGCDOne: {isGCDOne}')
