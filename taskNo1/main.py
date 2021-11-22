@@ -169,38 +169,41 @@ def encryptor_decryptor(key, message, mode):
         #print(f'bit_message: {bit_message[2:]}')
         #print(f'key:    {key}')
         length_bit_message = len(bit_message[2:])
-        print(f'Length: {length_bit_message}')
+        print(f'Length of bit message[2:]: {length_bit_message}')
         if length_bit_message <= len(key):
-            tmp = bin(int(bit_message[2:],2) ^ int(key,2))
-            #print(f'tmp:    {tmp[2:]}')
-            result = tmp[-length_bit_message:]
-
-            
+            result = bin(int(bit_message[2:],2) ^ int(key,2))
+            result = result[2:]
+            print(f'Length of result[2:]: {len(result)}')
+            #print(f'result {result}')
+            print(f'Length of key: {len(key)}')
+            #print(f'key    {key}')
             # dd/mm/YY H:M:S
             now = datetime.now()
             date_and_time = now.strftime("%d-%m-%Y_%H:%M:%S")
 
             # creating file with generated number
-            f_en_message= open("142463_"+date_and_time+"_encrypted_message.txt","w+")
+            file_name = date_and_time+"_encryp_mes.txt"
+            f_en_message= open(file_name,"w+")
             f_en_message.write(result)
             f_en_message.close()
             #print(f'encrypted_m: {result}')
-            print('Your message was encrypted, check saved file if needed')
-            return result, tmp[2:]
+            print(f'Your message was encrypted, check saved file {file_name} if needed')
+            return result
         else:
             print('Your message is too long!')
     else:
         length_bit_message = len(message)
+        print(f'Length of message: ')
         tmp = bin(int(message,2) ^ int(key,2))
-        tmp = int(tmp[-length_bit_message:],2)
+        tmp = int(tmp,2)
         result = tmp.to_bytes((tmp.bit_length() + 7) // 8, 'big').decode()
         print('Your message was decrypted')
         return result
 
 
 #print('Test for encryptor_decryptor')
-#key = '10000000011110011010'
-#mes = 'ab'
+#key = '1010101011111111110000000011110011010'
+#mes = '/ab'
 #res = encryptor_decryptor(key, mes, True)
 #encryptor_decryptor(key, res, False)
 
@@ -259,7 +262,7 @@ if isBlumInt and isGCDOne:
     # dd/mm/YY H:M:S
     now = datetime.now()
     date_and_time = now.strftime("%d-%m-%Y_%H:%M:%S")
-    print("date and time: ", date_and_time)
+    #print("date and time: ", date_and_time)
 
     # creating file with generated number
     f_gen_number= open("142463_"+date_and_time+".txt","w+")
@@ -275,8 +278,8 @@ if isBlumInt and isGCDOne:
         file.close()
         secret_message = data[:2000]
         
-        encrypted_message, encrypted_message_long = encryptor_decryptor(generated_number,secret_message, True)
-        runAllTests(encrypted_message_long)
+        encrypted_message = encryptor_decryptor(generated_number,secret_message, True)
+        runAllTests(encrypted_message)
         decrypted_message = encryptor_decryptor(generated_number,encrypted_message,False) 
         testIfmessageWasCorrectlyEncrypted(secret_message, decrypted_message,False)
 
