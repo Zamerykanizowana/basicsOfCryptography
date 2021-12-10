@@ -235,29 +235,27 @@ def pcbc(message_to_encrypt, k, f, initialization_vector):
             f.write(m + '\n')
 
 
+if __name__ == "__main__":
+    message = b'I just want to finish this task and go to bed.'
+    cipherKey = b'oskm3ucjakops2LA'
+    initialization_vector = b'ajsujnghkopkjasv'
 
+    now = datetime.now()
+    date_and_time = now.strftime("%d-%m-%Y_%H:%M:%S")
+    file_name = date_and_time + "_data.txt"
+    file_data = open(file_name, 'w+')
+    file_data.write('message to encrypt: ' + message.decode('utf-8') + '\n')
 
+    ecb(message, cipherKey, file_data)
+    cbc(message, cipherKey, file_data, initialization_vector)
+    pcbc(message, cipherKey, file_data, initialization_vector)
 
-message = b'I just want to finish this task and go to bed.'
-cipherKey = b'oskm3ucjakops2LA'
-initialization_vector = b'ajsujnghkopkjasv'
-
-now = datetime.now()
-date_and_time = now.strftime("%d-%m-%Y_%H:%M:%S")
-file_name = date_and_time + "_data.txt"
-file_data = open(file_name, 'w+')
-file_data.write('message to encrypt: ' + message.decode('utf-8') + '\n')
-
-ecb(message, cipherKey, file_data)
-cbc(message, cipherKey, file_data, initialization_vector)
-pcbc(message, cipherKey, file_data, initialization_vector)
-
-file_data.close()
-#print(f'length mes: {len(message)}')
-pad_message = pad(message,16)
-#print(f'length of pad_message: {len(pad_message)}')
-#print(f'pad_message: {pad_message}')
-pad_message_in_chunks = chunk(pad_message, 16)
-#print(f'pad_message_in_chunks: {pad_message_in_chunks}')
+    file_data.close()
+    #print(f'length mes: {len(message)}')
+    pad_message = pad(message,16)
+    #print(f'length of pad_message: {len(pad_message)}')
+    #print(f'pad_message: {pad_message}')
+    pad_message_in_chunks = chunk(pad_message, 16)
+    #print(f'pad_message_in_chunks: {pad_message_in_chunks}')
 
 
