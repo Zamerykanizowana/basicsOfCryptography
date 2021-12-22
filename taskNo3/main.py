@@ -52,11 +52,10 @@ def generate_key():
     print(c_str(f'n: {n}', 'deb'))
     fi_n = (p-1)*(q-1)
     print(c_str(f'fi_n: {fi_n}', 'deb'))
-    success = False
-    while not success:
+    while True:
         e = random.randint(0,fi_n-1)
         if prime_number(e) and math.gcd(e, fi_n) == 1:
-            success = True
+            break
     #e = 7
     #e = 642011
     # e, d, n
@@ -85,6 +84,15 @@ def check_en_de_m(m, de_m):
     else:
         print(c_str('Message was NOT correctly encrypted decrypted.', 'err'))
         return False
+
+def check_s_ver(s, ver_s):
+    if s == ver_s:
+        print(c_str('Message was correctly signed and verified.', 'res'))
+        return True
+    else:
+        print(c_str('Message was NOT correctly signed and verified.', 'err'))
+        return False
+
 
 def question(len_of_m):
     question = input(c_str('Press m if manual message to encrypt, press a to automatic\n','inte'))
@@ -138,8 +146,8 @@ for i in range(0, len(tab_a)):
     de_m_b = de_m_b + chr(decrypt(e_b, n_b, tab_b[i]))
 print(c_str(f'de_m_a: {de_m_a}', 'res'))
 print(c_str(f'de_m_b: {de_m_b}', 'res'))
-check_en_de_m(m_for_sig, de_m_a)
-check_en_de_m(m_for_sig, de_m_b)
+check_s_ver(m_for_sig, de_m_a)
+check_s_ver(m_for_sig, de_m_b)
 
 
 
